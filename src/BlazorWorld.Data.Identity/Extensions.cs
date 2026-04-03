@@ -15,43 +15,10 @@ namespace BlazorWorld.Data.Identity
     {
         public static void AddBlazorWorldIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            var provider = configuration["IdentityDbProvider"].ToLower();
-            if (string.IsNullOrEmpty(provider))
-            {
-                provider = "sqlite";
-            }
-            string connectionString = configuration.GetConnectionString("IdentityDbConnection");
-            switch (provider.ToLower())
-            {
-                case "sqlserver":
-                    services.AddDbContext<AppIdentityDbContext>(options =>
-                        options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-                    services.AddDbContext<SqlServerIdentityDbContext>(options =>
-                        options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-                    break;
-                case "mysql":
-                    services.AddDbContext<AppIdentityDbContext>(options =>
-                        options.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion),
-                        ServiceLifetime.Transient);
-                    services.AddDbContext<MySqlIdentityDbContext>(options =>
-                        options.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion),
-                        ServiceLifetime.Transient);
-                    break;
-                case "sqlite":
-                    if (string.IsNullOrEmpty(connectionString))
-                    {
-                        var identityDbFilename = configuration["IdentityDbFilename"];
-                        if (string.IsNullOrEmpty(identityDbFilename))
-                            identityDbFilename = "blazorworld-identity.db";
-                        var connectionStringBuilder = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder { DataSource = identityDbFilename };
-                        connectionString = connectionStringBuilder.ToString();
-                    }
-                    services.AddDbContext<AppIdentityDbContext>(options =>
-                        options.UseSqlite(connectionString), ServiceLifetime.Transient);
-                    services.AddDbContext<SqliteIdentityDbContext>(options =>
-                        options.UseSqlite(connectionString), ServiceLifetime.Transient);
-                    break;
-            }
+			string connectionString = configuration.GetConnectionString("IdentityDbConnection");
+
+			services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+			services.AddDbContext<SqlServerIdentityDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -62,40 +29,13 @@ namespace BlazorWorld.Data.Identity
                 .AddApiAuthorization<ApplicationUser, AppIdentityDbContext>();
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-            services.Configure<IdentityOptions>(options =>
-                options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
+            services.Configure<IdentityOptions>(options => options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
             services.AddApiAuthorization();
         }
 
         public static void UpdateBlazorWorldIdentityDatabase(this IApplicationBuilder app, IConfiguration configuration)
         {
-            var provider = configuration["IdentityDbProvider"].ToLower();
-            if (string.IsNullOrEmpty(provider))
-            {
-                provider = "sqlite";
-            }
-            switch (provider.ToLower())
-            {
-                case "sqlite":
-                    {
-                        app.ProcessDb<SqliteIdentityDbContext>();
-                        break;
-                    }
-                case "mysql":
-                    {
-                        app.ProcessDb<MySqlIdentityDbContext>();
-                        break;
-                    }
-                case "sqlserver":
-                    {
-                        app.ProcessDb<SqlServerIdentityDbContext>();
-                        break;
-                    }
-                default:
-                    {
-                        throw new Exception();
-                    }
-            }
+			app.ProcessDb<SqlServerIdentityDbContext>();
         }
 
         public static void UseBlazorWorldIdentity(this IApplicationBuilder app)

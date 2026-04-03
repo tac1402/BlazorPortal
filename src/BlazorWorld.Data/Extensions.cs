@@ -13,74 +13,18 @@ namespace BlazorWorld.Data
     {
         public static void AddBlazorWorldDataProvider(this IServiceCollection services, IConfiguration configuration)
         {
-            var provider = configuration["AppDbProvider"];
-            if (string.IsNullOrEmpty(provider))
-            {
-                provider = "sqlite";
-            }
             string connectionString = configuration.GetConnectionString("AppDbConnection");
-            switch (provider.ToLower())
-            {
-                case "sqlserver":
-                    services.AddDbContext<AppDbContext>(options =>
-                        options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-                    services.AddDbContext<SqlServerDbContext>(options =>
-                        options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-                    break;
-                case "mysql":
-                    services.AddDbContext<AppDbContext>(options =>
-                        options.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion),
-                        ServiceLifetime.Transient);
-                    services.AddDbContext<MySqlDbContext>(options =>
-                        options.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion),
-                        ServiceLifetime.Transient);
-                    break;
-                case "sqlite":
-                    if (string.IsNullOrEmpty(connectionString))
-                    {
-                        var appDbFilename = configuration["AppDbFilename"];
-                        if (string.IsNullOrEmpty(appDbFilename))
-                            appDbFilename = "blazorworld.db";
-                        var connectionStringBuilder = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder { DataSource = appDbFilename };
-                        connectionString = connectionStringBuilder.ToString();
-                    }
-                    services.AddDbContext<AppDbContext>(options =>
-                        options.UseSqlite(connectionString), ServiceLifetime.Transient);
-                    services.AddDbContext<SqliteDbContext>(options =>
-                        options.UseSqlite(connectionString), ServiceLifetime.Transient);
-                    break;
-            }
+
+			services.AddDbContext<AppDbContext>(options =>
+				options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+			services.AddDbContext<SqlServerDbContext>(options =>
+				options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+
         }
 
         public static void UpdateBlazorWorldDatabase(this IApplicationBuilder app, IConfiguration configuration)
         {
-            var provider = configuration["AppDbProvider"].ToLower();
-            if (string.IsNullOrEmpty(provider))
-            {
-                provider = "sqlite";
-            }
-            switch (provider.ToLower())
-            {
-                case "sqlite":
-                    {
-                        app.ProcessDb<SqliteDbContext>();
-                        break;
-                    }
-                case "mysql":
-                    {
-                        app.ProcessDb<MySqlDbContext>();
-                        break;
-                    }
-                case "sqlserver":
-                    {
-                        app.ProcessDb<SqlServerDbContext>();
-                        break;
-                    }
-                default:
-                    {
-                        throw new Exception();
-                    }
-            }
+			app.ProcessDb<SqlServerDbContext>();
         }
 
         private static void ProcessDb<T>(this IApplicationBuilder app) where T : AppDbContext
