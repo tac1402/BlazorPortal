@@ -22,8 +22,6 @@ namespace BlazorWorld.Services
             services.AddTransient<ISettingService, SettingService>();
 
             // security
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IAppEmailSender, EmailSender>();
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IInvitationService, InvitationService>();
 
@@ -43,22 +41,28 @@ namespace BlazorWorld.Services
 
         public static void UseBlazorWorldServices(this IServiceProvider serviceProvider, IConfiguration configuration)
         {
-            LoadSettingsAsync(serviceProvider, configuration).Wait();
-            CreateUserRolesAsync(serviceProvider).Wait();
+            using (IServiceScope scope = serviceProvider.CreateScope())
+            {
+				ISettingService settingService = scope.ServiceProvider.GetRequiredService<ISettingService>();
+				LoadSettingsAsync(settingService, configuration).Wait();
+
+				CreateUserRolesAsync(scope).Wait();
+            }
         }
 
-        private static async Task LoadSettingsAsync(IServiceProvider serviceProvider, IConfiguration configuration)
+        private static async Task LoadSettingsAsync(ISettingService settingService, IConfiguration configuration)
         {
-            var settingService = serviceProvider.GetRequiredService<ISettingService>();
+            //var settingService = serviceProvider.GetRequiredService<ISettingService>();
             await settingService.LoadSettingsAsync(configuration);
         }
 
-        private static async Task CreateUserRolesAsync(IServiceProvider serviceProvider)
+        private static async Task CreateUserRolesAsync(IServiceScope scope)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+			UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+			RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+			ISettingService configurationService = scope.ServiceProvider.GetRequiredService<ISettingService>();
 
-            foreach (var role in Roles.All)
+			foreach (var role in Roles.All)
             {
                 IdentityResult roleResult;
                 var roleCheck = await roleManager.RoleExistsAsync(role);
@@ -68,7 +72,6 @@ namespace BlazorWorld.Services
                 }
             }
 
-            var configurationService = serviceProvider.GetRequiredService<ISettingService>();
             var roleUsersArray = await configurationService.RoleUserSettingsAsync();
             foreach (var roleUserSettings in roleUsersArray)
             {

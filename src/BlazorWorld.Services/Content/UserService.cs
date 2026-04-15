@@ -38,7 +38,13 @@ namespace BlazorWorld.Services.Content
         {
             var avatarHash = string.Empty;
             if (!string.IsNullOrEmpty(appUserId))
-                avatarHash = (await GetUserAsync(appUserId)).AvatarHash;
+            {
+                ApplicationUser user = await GetUserAsync(appUserId);
+                if (user != null)
+                {
+                    avatarHash = user.AvatarHash;
+                }
+            }
             return avatarHash;
         }
     }

@@ -1,5 +1,6 @@
 using BlazorWorld.Core.Entities.Organization;
 using BlazorWorld.Core.Repositories;
+using BlazorWorld.Data.Identity;
 using BlazorWorld.Services.Security;
 using System;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace BlazorWorld.Services
     public class InvitationService : IInvitationService
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly IAppEmailSender _emailSender;
+        private readonly IAppEmailSender<ApplicationUser> _emailSender;
         
         public InvitationService (
             IInvitationRepository invitationRepository,
-            IAppEmailSender emailSender)
+            IAppEmailSender<ApplicationUser> emailSender)
         {
             _invitationRepository = invitationRepository;
             _emailSender = emailSender;
