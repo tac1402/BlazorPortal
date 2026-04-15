@@ -1,4 +1,2 @@
-﻿dotnet ef migrations add InitialCreate --context SqliteIdentityDbContext --output-dir Migrations/Sqlite --startup-project ../BlazorWorld.Web.Server --configuration DebugEf -v
-dotnet ef migrations add InitialCreate --context MySqlIdentityDbContext --output-dir Migrations/MySql --startup-project ../BlazorWorld.Web.Server --configuration DebugEf -v
-dotnet ef migrations add InitialCreate --context SqlServerIdentityDbContext --output-dir Migrations/SqlServer --startup-project ../BlazorWorld.Web.Server --configuration DebugEf -v
+﻿dotnet ef migrations add InitialCreate --context SqlServerIdentityDbContext --project BlazorWorld.Data.Identity --startup-project BlazorWorld.Web.Server --msbuildprojectextensionspath "obj"
 dotnet tool update --global dotnet-ef

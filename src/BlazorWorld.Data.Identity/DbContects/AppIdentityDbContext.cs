@@ -1,7 +1,7 @@
-﻿using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.EntityFramework.Extensions;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Options;
+﻿using Duende.IdentityServer.EntityFramework.Entities;
+using Duende.IdentityServer.EntityFramework.Extensions;
+using Duende.IdentityServer.EntityFramework.Interfaces;
+using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -30,10 +30,12 @@ namespace BlazorWorld.Data.Identity.DbContexts
         }
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
-
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
+		public DbSet<Key> Keys { get; set; }
+		public DbSet<ServerSideSession> ServerSideSessions { get; set; }
+		public DbSet<PushedAuthorizationRequest> PushedAuthorizationRequests { get; set; }
 
-        Task<int> IPersistedGrantDbContext.SaveChangesAsync() => base.SaveChangesAsync();
+		Task<int> IPersistedGrantDbContext.SaveChangesAsync() => base.SaveChangesAsync();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,10 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlazorWorld.Data.Identity.Migrations.SqlServer
+#nullable disable
+
+namespace BlazorWorld.Data.Identity.Migrations
 {
+    /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -32,26 +36,6 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                     Reputation = table.Column<int>(type: "int", nullable: false),
                     Coins = table.Column<int>(type: "int", nullable: false),
                     AvatarHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField6 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField7 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField8 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField9 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField10 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField11 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField12 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField13 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField14 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField15 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField16 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField17 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField18 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField19 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField20 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -92,10 +76,30 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
+                name: "Keys",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Use = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Algorithm = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsX509Certificate = table.Column<bool>(type: "bit", nullable: false),
+                    DataProtected = table.Column<bool>(type: "bit", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Keys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
-                    Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SubjectId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -108,7 +112,43 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                    table.PrimaryKey("PK_PersistedGrants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PushedAuthorizationRequests",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReferenceValueHash = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ExpiresAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Parameters = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PushedAuthorizationRequests", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServerSideSessions",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Scheme = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SubjectId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Renewed = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Expires = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServerSideSessions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,8 +197,8 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -202,8 +242,8 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -268,9 +308,26 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Keys_Use",
+                table: "Keys",
+                column: "Use");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_ConsumedTime",
+                table: "PersistedGrants",
+                column: "ConsumedTime");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_Key",
+                table: "PersistedGrants",
+                column: "Key",
+                unique: true,
+                filter: "[Key] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_SubjectId_ClientId_Type",
@@ -281,8 +338,46 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 name: "IX_PersistedGrants_SubjectId_SessionId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "SessionId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PushedAuthorizationRequests_ExpiresAtUtc",
+                table: "PushedAuthorizationRequests",
+                column: "ExpiresAtUtc");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PushedAuthorizationRequests_ReferenceValueHash",
+                table: "PushedAuthorizationRequests",
+                column: "ReferenceValueHash",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_DisplayName",
+                table: "ServerSideSessions",
+                column: "DisplayName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_Expires",
+                table: "ServerSideSessions",
+                column: "Expires");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_Key",
+                table: "ServerSideSessions",
+                column: "Key",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_SessionId",
+                table: "ServerSideSessions",
+                column: "SessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_SubjectId",
+                table: "ServerSideSessions",
+                column: "SubjectId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -304,7 +399,16 @@ namespace BlazorWorld.Data.Identity.Migrations.SqlServer
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
+                name: "Keys");
+
+            migrationBuilder.DropTable(
                 name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "PushedAuthorizationRequests");
+
+            migrationBuilder.DropTable(
+                name: "ServerSideSessions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

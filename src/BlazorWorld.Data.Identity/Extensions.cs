@@ -9,33 +9,22 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Security.Claims;
 
+
 namespace BlazorWorld.Data.Identity
 {
     public static class Extensions
     {
         public static void AddBlazorWorldIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-			string connectionString = configuration.GetConnectionString("IdentityDbConnection");
+		string connectionString = configuration.GetConnectionString("IdentityDbConnection");
 
-			services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-			services.AddDbContext<SqlServerIdentityDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, AppIdentityDbContext>();
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-            services.Configure<IdentityOptions>(options => options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
-            services.AddApiAuthorization();
-        }
+		services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+		services.AddDbContext<SqlServerIdentityDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+	}
 
         public static void UpdateBlazorWorldIdentityDatabase(this IApplicationBuilder app, IConfiguration configuration)
         {
-			app.ProcessDb<SqlServerIdentityDbContext>();
+		app.ProcessDb<SqlServerIdentityDbContext>();
         }
 
         public static void UseBlazorWorldIdentity(this IApplicationBuilder app)
