@@ -122,3 +122,5 @@ src/BlazorWorld.Web.Server/blazorworld.db-wal
 src/BlazorWorld.Web.Server/blazorworld-identity.db
 src/BlazorWorld.Web.Server/blazorworld-identity.db-shm
 src/BlazorWorld.Web.Server/blazorworld-identity.db-wal
+/src/BlazorWorld.Web.Server/appsettings.json
+/src/BlazorWorld.Web.Server/appsettings.json

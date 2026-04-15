@@ -28,7 +28,7 @@ namespace BlazorWorld.Web.Server.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IAppEmailSender<ApplicationUser> _emailSender;
         private readonly ISecurityService _securityService;
         private readonly BlazorWorld.Services.Content.IProfileService _profileService;
         private readonly IInvitationService _invitationService;
@@ -38,7 +38,7 @@ namespace BlazorWorld.Web.Server.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
+			IAppEmailSender<ApplicationUser> emailSender,
             ISecurityService securityService,
             BlazorWorld.Services.Content.IProfileService profileService,
             IInvitationService invitationService)

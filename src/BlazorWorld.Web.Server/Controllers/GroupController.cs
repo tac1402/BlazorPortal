@@ -1,6 +1,6 @@
 ﻿using BlazorWorld.Core.Entities.Organization;
 using BlazorWorld.Services.Organization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,7 +29,7 @@ namespace BlazorWorld.Web.Server.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllAsync([FromQuery] string module)
+        public async Task<IActionResult> GetAllAsync([FromQuery] string? module = null)
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(await _groupService.GetAllAsync(userId, module));
