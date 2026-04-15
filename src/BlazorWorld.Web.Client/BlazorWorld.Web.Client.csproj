@@ -1,20 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-	<TargetFramework>net5.0</TargetFramework>
-	<BlazorCacheBootResources>false</BlazorCacheBootResources>
-	<PublishTrimmed>false</PublishTrimmed>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="9.3.0-preview2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.5" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.21" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,18 +20,9 @@
     <ProjectReference Include="..\BlazorWorld.Web.Client.Modules\BlazorWorld.Web.Client.Modules.Messages\BlazorWorld.Web.Client.Modules.Messages.csproj" />
     <ProjectReference Include="..\BlazorWorld.Web.Client.Modules\BlazorWorld.Web.Client.Modules.Profiles\BlazorWorld.Web.Client.Modules.Profiles.csproj" />
     <ProjectReference Include="..\BlazorWorld.Web.Client.Modules\BlazorWorld.Web.Client.Modules.Videos\BlazorWorld.Web.Client.Modules.Videos.csproj" />
+    <ProjectReference Include="..\BlazorWorld.Web.Client.Services\BlazorWorld.Web.Client.Services.csproj" />
     <ProjectReference Include="..\BlazorWorld.Web.Client.Shell\BlazorWorld.Web.Client.Shell.csproj" />
     <ProjectReference Include="..\BlazorWorld.Web.Shared\BlazorWorld.Web.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\img\" />
-    <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\vendor\" />
   </ItemGroup>
 
 </Project>

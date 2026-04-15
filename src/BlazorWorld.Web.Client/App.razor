@@ -1,6 +1,7 @@
 @using BlazorWorld.Web.Client.Shell.Components
 
 <CascadingAuthenticationState>
+    <HubInitializer />
     <Router AppAssembly="@typeof(Program).Assembly"
             AdditionalAssemblies="new[] {
                                       typeof(Shell.Route).Assembly,

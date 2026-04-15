@@ -17,8 +17,10 @@ namespace BlazorWorld.Web.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
+			
+            //builder.Logging.SetMinimumLevel(LogLevel.Trace);
 
-            builder.Services.AddHttpClient("BlazorWorld.Web.ServerAPI",
+			builder.Services.AddHttpClient("BlazorWorld.Web.ServerAPI",
                 client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
             builder.Services.AddHttpClient("BlazorWorld.Web.PublicServerAPI", 
@@ -28,8 +30,8 @@ namespace BlazorWorld.Web.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient("BlazorWorld.Web.ServerAPI"));
 
-            builder.Services.AddApiAuthorization()
-                .AddAccountClaimsPrincipalFactory<CustomUserFactory>();
+            //builder.Services.AddApiAuthorization()
+            //    .AddAccountClaimsPrincipalFactory<CustomUserFactory>();
 
             // Start BlazorWorld.Web.Client Updates
             builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
@@ -40,17 +42,16 @@ namespace BlazorWorld.Web.Client
 
             builder.Services.AddOidcAuthentication(options =>
             {
-                //options.ProviderOptions.Authority = "https://localhost:5001/";
-                // Configure your authentication provider options here.
-                // For more information, see https://aka.ms/blazor-standalone-auth
                 builder.Configuration.Bind("oidc", options.ProviderOptions);
-            });
-            // End BlazorWorld.Web.Client Updates
+            })
+			  .AddAccountClaimsPrincipalFactory<CustomUserFactory>();
 
-            var host = builder.Build();
+			// End BlazorWorld.Web.Client Updates
 
-            var hubClientService = host.Services.GetRequiredService<IWebHubClientService>();
-            await hubClientService.InitAsync();
+			var host = builder.Build();
+
+            //var hubClientService = host.Services.GetRequiredService<IWebHubClientService>();
+            //await hubClientService.InitAsync();
 
             await host.RunAsync();
         }
