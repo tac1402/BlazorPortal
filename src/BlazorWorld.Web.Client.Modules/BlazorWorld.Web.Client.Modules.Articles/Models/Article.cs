@@ -17,13 +17,13 @@ namespace BlazorWorld.Web.Client.Modules.Articles.Models
             return node.ConvertTo<Article>();
         }
 
-        public string CategoryId
+        public string? CategoryId
         {
             get => ParentId;
             set => ParentId = value;
         }
 
-        public string Summary
+        public string? Summary
         {
             get => CustomFields != null ? CustomFields.CustomField1 : string.Empty;
             set => CustomFields.CustomField1 = value;

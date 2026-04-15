@@ -17,7 +17,7 @@ namespace BlazorWorld.Web.Client.Modules.Forums.Models
             return node.ConvertTo<Forum>();
         }
 
-        public string Name
+        public string? Name
         {
             get => Title;
             set => Title = value;

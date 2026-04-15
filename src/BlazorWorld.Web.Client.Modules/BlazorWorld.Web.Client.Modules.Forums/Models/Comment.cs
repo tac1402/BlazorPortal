@@ -17,7 +17,7 @@ namespace BlazorWorld.Web.Client.Modules.Forums.Models
             return node.ConvertTo<Comment>();
         }
 
-        public string PostId
+        public string? PostId
         {
             get => ParentId;
             set => ParentId = value;

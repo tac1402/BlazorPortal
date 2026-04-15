@@ -17,13 +17,13 @@ namespace BlazorWorld.Web.Client.Modules.Profiles.Models
             return node.ConvertTo<Profile>();
         }
 
-        public string Headline
+        public string? Headline
         {
             get => CustomFields != null ? CustomFields.CustomField1 : string.Empty;
             set => CustomFields.CustomField1 = value;
         }
 
-        public string About
+        public string? About
         {
             get => this.Content;
             set => this.Content = value;
