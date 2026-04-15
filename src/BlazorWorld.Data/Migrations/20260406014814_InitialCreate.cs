@@ -1,10 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlazorWorld.Data.Migrations.SqlServer
+#nullable disable
+
+namespace BlazorWorld.Data.Migrations
 {
+    /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -30,12 +34,12 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
-                name: "Badges",
+                name: "Badge",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TenantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SiteId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -45,7 +49,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Badges", x => x.Id);
+                    table.PrimaryKey("PK_Badge", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,15 +76,15 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FromEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FromName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    To = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateSent = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponseStatusCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponseHeaders = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponseBody = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FromEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FromName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    To = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateSent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResponseStatusCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResponseHeaders = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResponseBody = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,7 +120,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Module = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsOpen = table.Column<bool>(type: "bit", nullable: false),
+                    IsOpen = table.Column<bool>(type: "bit", nullable: true),
                     MemberCount = table.Column<int>(type: "int", nullable: false),
                     TenantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SiteId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -150,13 +154,31 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
+                name: "Keys",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Use = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Algorithm = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsX509Certificate = table.Column<bool>(type: "bit", nullable: false),
+                    DataProtected = table.Column<bool>(type: "bit", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Keys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Module = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Module = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TenantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SiteId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -205,7 +227,9 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 name: "PersistedGrants",
                 columns: table => new
                 {
-                    Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SubjectId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -218,7 +242,43 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                    table.PrimaryKey("PK_PersistedGrants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PushedAuthorizationRequests",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReferenceValueHash = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ExpiresAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Parameters = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PushedAuthorizationRequests", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServerSideSessions",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Scheme = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SubjectId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Renewed = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Expires = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServerSideSessions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -262,41 +322,11 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     CustomField3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomField4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomField5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField6 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField7 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField8 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField9 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField10 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField11 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField12 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField13 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField14 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField15 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField16 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField17 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField18 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField19 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomField20 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IndexedCustomField1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IndexedCustomField2 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IndexedCustomField3 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IndexedCustomField4 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField5 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField6 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField7 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField8 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField9 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField10 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField11 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField12 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField13 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField14 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField15 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField16 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField17 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField18 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField19 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IndexedCustomField20 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    IndexedCustomField5 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -305,8 +335,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         name: "FK_NodeCustomFields_Nodes_NodeId",
                         column: x => x.NodeId,
                         principalTable: "Nodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -328,48 +357,66 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         name: "FK_NodeLinks_Nodes_NodeId",
                         column: x => x.NodeId,
                         principalTable: "Nodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "NodeTags",
+                name: "NodeReaction",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NodeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReactionType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NodeReaction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NodeReaction_Nodes_NodeId",
+                        column: x => x.NodeId,
+                        principalTable: "Nodes",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NodeTag",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Tag = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NodeTags", x => x.Id);
+                    table.PrimaryKey("PK_NodeTag", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NodeTags_Nodes_NodeId",
+                        name: "FK_NodeTag_Nodes_NodeId",
                         column: x => x.NodeId,
                         principalTable: "Nodes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NodeVersions",
+                name: "NodeVersion",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Version = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NodeVersions", x => x.Id);
+                    table.PrimaryKey("PK_NodeVersion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NodeVersions_Nodes_NodeId",
+                        name: "FK_NodeVersion_Nodes_NodeId",
                         column: x => x.NodeId,
                         principalTable: "Nodes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -388,28 +435,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         name: "FK_NodeVotes_Nodes_NodeId",
                         column: x => x.NodeId,
                         principalTable: "Nodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reactions",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReactionType = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reactions_Nodes_NodeId",
-                        column: x => x.NodeId,
-                        principalTable: "Nodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -423,8 +449,8 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 column: "NodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Badges_UserId",
-                table: "Badges",
+                name: "IX_Badge_UserId",
+                table: "Badge",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -454,6 +480,11 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 column: "Email");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Keys_Use",
+                table: "Keys",
+                column: "Use");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Messages_GroupId",
                 table: "Messages",
                 column: "GroupId");
@@ -464,64 +495,9 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 column: "IndexedCustomField1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField10",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField10");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField11",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField11");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField12",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField12");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField13",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField13");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField14",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField14");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField15",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField15");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField16",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField16");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField17",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField17");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField18",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField18");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField19",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField19");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_NodeCustomFields_IndexedCustomField2",
                 table: "NodeCustomFields",
                 column: "IndexedCustomField2");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField20",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField20");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NodeCustomFields_IndexedCustomField3",
@@ -537,26 +513,6 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 name: "IX_NodeCustomFields_IndexedCustomField5",
                 table: "NodeCustomFields",
                 column: "IndexedCustomField5");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField6",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField6");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField7",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField7");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField8",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField8");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeCustomFields_IndexedCustomField9",
-                table: "NodeCustomFields",
-                column: "IndexedCustomField9");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NodeCustomFields_NodeId",
@@ -581,6 +537,16 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 columns: new[] { "ToNodeId", "Type" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_NodeReaction_NodeId",
+                table: "NodeReaction",
+                column: "NodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NodeReaction_NodeId_UserId",
+                table: "NodeReaction",
+                columns: new[] { "NodeId", "UserId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Nodes_GroupId",
                 table: "Nodes",
                 column: "GroupId");
@@ -596,18 +562,18 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 column: "Slug");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeTags_NodeId",
-                table: "NodeTags",
+                name: "IX_NodeTag_NodeId",
+                table: "NodeTag",
                 column: "NodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeTags_Tag",
-                table: "NodeTags",
+                name: "IX_NodeTag_Tag",
+                table: "NodeTag",
                 column: "Tag");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NodeVersions_NodeId",
-                table: "NodeVersions",
+                name: "IX_NodeVersion_NodeId",
+                table: "NodeVersion",
                 column: "NodeId");
 
             migrationBuilder.CreateIndex(
@@ -621,9 +587,21 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 columns: new[] { "NodeId", "UserId" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_ConsumedTime",
+                table: "PersistedGrants",
+                column: "ConsumedTime");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_Key",
+                table: "PersistedGrants",
+                column: "Key",
+                unique: true,
+                filter: "[Key] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_SubjectId_ClientId_Type",
@@ -636,14 +614,41 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reactions_NodeId",
-                table: "Reactions",
-                column: "NodeId");
+                name: "IX_PushedAuthorizationRequests_ExpiresAtUtc",
+                table: "PushedAuthorizationRequests",
+                column: "ExpiresAtUtc");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reactions_NodeId_UserId",
-                table: "Reactions",
-                columns: new[] { "NodeId", "UserId" });
+                name: "IX_PushedAuthorizationRequests_ReferenceValueHash",
+                table: "PushedAuthorizationRequests",
+                column: "ReferenceValueHash",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_DisplayName",
+                table: "ServerSideSessions",
+                column: "DisplayName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_Expires",
+                table: "ServerSideSessions",
+                column: "Expires");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_Key",
+                table: "ServerSideSessions",
+                column: "Key",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_SessionId",
+                table: "ServerSideSessions",
+                column: "SessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerSideSessions_SubjectId",
+                table: "ServerSideSessions",
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Site_TenantId",
@@ -651,13 +656,14 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 column: "TenantId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Activities");
 
             migrationBuilder.DropTable(
-                name: "Badges");
+                name: "Badge");
 
             migrationBuilder.DropTable(
                 name: "DeviceCodes");
@@ -675,6 +681,9 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 name: "Invitations");
 
             migrationBuilder.DropTable(
+                name: "Keys");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
@@ -684,10 +693,13 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 name: "NodeLinks");
 
             migrationBuilder.DropTable(
-                name: "NodeTags");
+                name: "NodeReaction");
 
             migrationBuilder.DropTable(
-                name: "NodeVersions");
+                name: "NodeTag");
+
+            migrationBuilder.DropTable(
+                name: "NodeVersion");
 
             migrationBuilder.DropTable(
                 name: "NodeVotes");
@@ -696,7 +708,10 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "Reactions");
+                name: "PushedAuthorizationRequests");
+
+            migrationBuilder.DropTable(
+                name: "ServerSideSessions");
 
             migrationBuilder.DropTable(
                 name: "Settings");

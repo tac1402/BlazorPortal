@@ -4,22 +4,23 @@ using BlazorWorld.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BlazorWorld.Data.Migrations.SqlServer
+#nullable disable
+
+namespace BlazorWorld.Data.Migrations
 {
     [DbContext(typeof(SqlServerDbContext))]
-    [Migration("20210206065315_InitialCreate")]
-    partial class InitialCreate
+    partial class SqlServerDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("ProductVersion", "9.0.14")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Configuration.Setting", b =>
                 {
@@ -100,6 +101,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -109,6 +111,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastUpdatedBy")
@@ -118,6 +121,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Module")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SiteId")
@@ -222,40 +226,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     b.Property<string>("CustomField1")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomField10")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField11")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField12")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField13")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField14")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField15")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField16")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField17")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField18")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField19")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CustomField2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField20")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomField3")
@@ -267,55 +238,10 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     b.Property<string>("CustomField5")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomField6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField7")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField8")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomField9")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("IndexedCustomField1")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("IndexedCustomField10")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField11")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField12")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField13")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField14")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField15")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField16")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField17")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField18")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField19")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("IndexedCustomField2")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField20")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IndexedCustomField3")
@@ -327,18 +253,6 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     b.Property<string>("IndexedCustomField5")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("IndexedCustomField6")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField7")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField8")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IndexedCustomField9")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("NodeId")
                         .HasColumnType("nvarchar(450)");
 
@@ -346,43 +260,13 @@ namespace BlazorWorld.Data.Migrations.SqlServer
 
                     b.HasIndex("IndexedCustomField1");
 
-                    b.HasIndex("IndexedCustomField10");
-
-                    b.HasIndex("IndexedCustomField11");
-
-                    b.HasIndex("IndexedCustomField12");
-
-                    b.HasIndex("IndexedCustomField13");
-
-                    b.HasIndex("IndexedCustomField14");
-
-                    b.HasIndex("IndexedCustomField15");
-
-                    b.HasIndex("IndexedCustomField16");
-
-                    b.HasIndex("IndexedCustomField17");
-
-                    b.HasIndex("IndexedCustomField18");
-
-                    b.HasIndex("IndexedCustomField19");
-
                     b.HasIndex("IndexedCustomField2");
-
-                    b.HasIndex("IndexedCustomField20");
 
                     b.HasIndex("IndexedCustomField3");
 
                     b.HasIndex("IndexedCustomField4");
 
                     b.HasIndex("IndexedCustomField5");
-
-                    b.HasIndex("IndexedCustomField6");
-
-                    b.HasIndex("IndexedCustomField7");
-
-                    b.HasIndex("IndexedCustomField8");
-
-                    b.HasIndex("IndexedCustomField9");
 
                     b.HasIndex("NodeId")
                         .IsUnique()
@@ -449,7 +333,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
 
                     b.HasIndex("NodeId", "UserId");
 
-                    b.ToTable("Reactions");
+                    b.ToTable("NodeReaction");
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Content.NodeTag", b =>
@@ -458,6 +342,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NodeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Tag")
@@ -470,7 +355,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
 
                     b.HasIndex("Tag");
 
-                    b.ToTable("NodeTags");
+                    b.ToTable("NodeTag");
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Content.NodeVersion", b =>
@@ -479,12 +364,15 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NodeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Version")
@@ -494,7 +382,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
 
                     b.HasIndex("NodeId");
 
-                    b.ToTable("NodeVersions");
+                    b.ToTable("NodeVersion");
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Content.NodeVote", b =>
@@ -539,6 +427,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SiteId")
@@ -548,13 +437,14 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Badges");
+                    b.ToTable("Badge");
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Organization.Email", b =>
@@ -563,30 +453,39 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DateSent")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FromEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FromName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResponseBody")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResponseHeaders")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResponseStatusCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("To")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -605,7 +504,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     b.Property<string>("CreatedDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsOpen")
+                    b.Property<bool?>("IsOpen")
                         .HasColumnType("bit");
 
                     b.Property<string>("Key")
@@ -745,7 +644,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     b.ToTable("Site");
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
+            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {
                     b.Property<string>("UserCode")
                         .HasMaxLength(200)
@@ -773,8 +672,7 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime?>("Expiration")
-                        .IsRequired()
+                    b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SessionId")
@@ -792,14 +690,52 @@ namespace BlazorWorld.Data.Migrations.SqlServer
 
                     b.HasIndex("Expiration");
 
-                    b.ToTable("DeviceCodes");
+                    b.ToTable("DeviceCodes", (string)null);
                 });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.PersistedGrant", b =>
+            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.Key", b =>
                 {
-                    b.Property<string>("Key")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Algorithm")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("DataProtected")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsX509Certificate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Use")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Use");
+
+                    b.ToTable("Keys", (string)null);
+                });
+
+            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ClientId")
                         .IsRequired()
@@ -824,6 +760,10 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                     b.Property<DateTime?>("Expiration")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Key")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("SessionId")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -837,15 +777,111 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsumedTime");
 
                     b.HasIndex("Expiration");
+
+                    b.HasIndex("Key")
+                        .IsUnique()
+                        .HasFilter("[Key] IS NOT NULL");
 
                     b.HasIndex("SubjectId", "ClientId", "Type");
 
                     b.HasIndex("SubjectId", "SessionId", "Type");
 
-                    b.ToTable("PersistedGrants");
+                    b.ToTable("PersistedGrants", (string)null);
+                });
+
+            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PushedAuthorizationRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("ExpiresAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Parameters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReferenceValueHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpiresAtUtc");
+
+                    b.HasIndex("ReferenceValueHash")
+                        .IsUnique();
+
+                    b.ToTable("PushedAuthorizationRequests", (string)null);
+                });
+
+            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.ServerSideSession", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("Renewed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Scheme")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SubjectId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisplayName");
+
+                    b.HasIndex("Expires");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.HasIndex("SessionId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("ServerSideSessions", (string)null);
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Content.NodeCustomFields", b =>
@@ -873,14 +909,18 @@ namespace BlazorWorld.Data.Migrations.SqlServer
                 {
                     b.HasOne("BlazorWorld.Core.Entities.Content.Node", null)
                         .WithMany("Tags")
-                        .HasForeignKey("NodeId");
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Content.NodeVersion", b =>
                 {
                     b.HasOne("BlazorWorld.Core.Entities.Content.Node", null)
                         .WithMany("Versions")
-                        .HasForeignKey("NodeId");
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BlazorWorld.Core.Entities.Content.NodeVote", b =>

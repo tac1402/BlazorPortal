@@ -1,8 +1,8 @@
-﻿using BlazorWorld.Core.Entities.Configuration;
+﻿using Duende.IdentityServer.EntityFramework.Options;
+using Duende.IdentityServer.EntityFramework.Extensions;
+using BlazorWorld.Core.Entities.Configuration;
 using BlazorWorld.Core.Entities.Content;
 using BlazorWorld.Core.Entities.Organization;
-using IdentityServer4.EntityFramework.Extensions;
-using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -37,13 +37,9 @@ namespace BlazorWorld.Data.DbContexts
         public DbSet<Node> Nodes { get; set; }
         public DbSet<NodeCustomFields> NodeCustomFields { get; set; }
         public DbSet<NodeLink> NodeLinks { get; set; }
-        public DbSet<NodeTag> NodeTags { get; set; }
-        public DbSet<NodeVersion> NodeVersions { get; set; }
         public DbSet<NodeVote> NodeVotes { get; set; }
-        public DbSet<NodeReaction> Reactions { get; set; }
 
         // organization entities
-        public DbSet<Badge> Badges { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
@@ -77,36 +73,6 @@ namespace BlazorWorld.Data.DbContexts
                 .HasIndex(x => x.IndexedCustomField4);
             modelBuilder.Entity<NodeCustomFields>()
                 .HasIndex(x => x.IndexedCustomField5);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField6);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField7);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField8);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField9);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField10);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField11);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField12);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField13);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField14);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField15);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField16);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField17);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField18);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField19);
-            modelBuilder.Entity<NodeCustomFields>()
-                .HasIndex(x => x.IndexedCustomField20);
             modelBuilder.Entity<NodeLink>()
                 .HasIndex(x => new { x.FromNodeId, x.Type });
             modelBuilder.Entity<NodeLink>()
