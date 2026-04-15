@@ -38,7 +38,7 @@ namespace BlazorWorld.Web.Client.Services
                 as HttpConnectionOptions;
 
             o.Headers = new Dictionary<string, string>();
-            o.Cookies = new System.Net.CookieContainer();
+            //o.Cookies = new System.Net.CookieContainer();
             o.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransports.All;
             o.DefaultTransferFormat = TransferFormat.Binary;
             o.CloseTimeout = TimeSpan.FromSeconds(5);
