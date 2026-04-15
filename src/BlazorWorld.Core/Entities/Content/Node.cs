@@ -13,25 +13,25 @@ namespace BlazorWorld.Core.Entities.Content
     public class Node : Item
     {
         [Required]
-        public string Module { get; set; }
+        public string? Module { get; set; }
         [Required]
-        public string Type { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Status { get; set; }
-        public string Slug { get; set; }
+        public string? Type { get; set; }
+        public string? Title { get; set; }
+        public string? Content { get; set; }
+        public string? Status { get; set; }
+        public string? Slug { get; set; }
 
         // Taxonomy Schemes
-        public string Path { get; set; }
-        public string ParentId { get; set; }
-        public string GroupId { get; set; }
+        public string? Path { get; set; }
+        public string? ParentId { get; set; }
+        public string? GroupId { get; set; }
 
-        public NodeCustomFields CustomFields { get; set; }
-        public ICollection<NodeLink> Links { get; set; } // format: type:link1,link2,...;type:link1,link2,...;...
-        public ICollection<NodeReaction> Reactions { get; set; }
-        public ICollection<NodeTag> Tags { get; set; }
-        public ICollection<NodeVersion> Versions { get; set; }
-        public ICollection<NodeVote> Votes { get; set; }
+        public NodeCustomFields? CustomFields { get; set; }
+        public ICollection<NodeLink>? Links { get; set; } // format: type:link1,link2,...;type:link1,link2,...;...
+        public ICollection<NodeReaction>? Reactions { get; set; }
+        public ICollection<NodeTag>? Tags { get; set; }
+        public ICollection<NodeVersion>? Versions { get; set; }
+        public ICollection<NodeVote>? Votes { get; set; }
 
         // Metrics
         public int Weight { get; set; }
@@ -42,13 +42,13 @@ namespace BlazorWorld.Core.Entities.Content
         public double Hot { get; set; }
 
         [NotMapped]
-        public string Parent { get; set; }
+        public string? Parent { get; set; }
 
         [NotMapped]
-        public string AllLinks { get; set; } // format: type:link1,link2,...;type:link1,link2,...;...
+        public string? AllLinks { get; set; } // format: type:link1,link2,...;type:link1,link2,...;...
 
         [NotMapped]
-        public string AllTags { get; set; }
+        public string? AllTags { get; set; }
 
         public int TotalVotes
         {

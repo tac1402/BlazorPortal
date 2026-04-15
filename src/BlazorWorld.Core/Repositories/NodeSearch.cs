@@ -4,14 +4,14 @@ namespace BlazorWorld.Core.Repositories
 {
     public class NodeSearch
     {
-        public string Slug { get; set; }
-        public string Module { get; set; }
-        public string Type { get; set; }
-        public string GroupId { get; set; }
-        public string Path { get; set; }
-        public string ParentId { get; set; }
+        public string? Slug { get; set; }
+        public string? Module { get; set; }
+        public string? Type { get; set; }
+        public string? GroupId { get; set; }
+        public string? Path { get; set; }
+        public string? ParentId { get; set; }
         public bool RootOnly { get; set; } = false;
-        public string OrderBy { get; set; }
+        public string? OrderBy { get; set; }
         public int PageSize { get; set; }
         public int TruncateContent { get; set; }
 
@@ -20,7 +20,7 @@ namespace BlazorWorld.Core.Repositories
             return $"slug={Slug}&module={Module}&type={Type}&groupId={GroupId}&path={Path}&parentId={ParentId}&rootOnly={RootOnly}&orderBy={OrderBy}&pageSize={PageSize}&truncateContent={TruncateContent}";
         }
 
-        public string[] OrderByItems()
+		public string[] OrderByItems()
         {
             if (!string.IsNullOrEmpty(OrderBy))
             {

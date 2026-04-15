@@ -8,9 +8,9 @@ namespace BlazorWorld.Core.Entities.Content
     public class NodeVote : Entity
     {
         [ForeignKey("Node")]
-        public string NodeId { get; set; }
+        public string? NodeId { get; set; }
         [Required]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         [Required]
         public short Score { get; set; }
     }

@@ -10,11 +10,11 @@ namespace BlazorWorld.Core.Entities.Organization
 {
     public class Group : Item
     {
-        public string Key { get; set; }
-        public string Name { get; set; }
-        public string Module { get; set; }
-        public string Slug { get; set; }
-        public bool IsOpen { get; set; }
+        public string? Key { get; set; }
+        public string? Name { get; set; }
+        public string? Module { get; set; }
+        public string? Slug { get; set; }
+        public bool? IsOpen { get; set; }
         public int MemberCount { get; set; }
         [NotMapped]
         public string[] MemberIds { get; set; }

@@ -8,10 +8,10 @@ namespace BlazorWorld.Core.Entities.Content
     {
         [ForeignKey("Node")]
         // Applies to Activities, Messages, and Nodes
-        public string NodeId { get; set; }
+        public string? NodeId { get; set; }
         [Required]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         [Required]
-        public string ReactionType { get; set; }
+        public string? ReactionType { get; set; }
     }
 }
